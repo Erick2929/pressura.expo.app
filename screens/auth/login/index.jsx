@@ -15,12 +15,22 @@ import {
   Text,
   useToast,
 } from "native-base";
+import ToastAlert from "../../../components/toastAlert";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { app } from "../../../config/firebase/firebase";
 
 function Login() {
+  const toast = useToast();
+  const id = "test-toast";
+  const auth = getAuth(app);
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
-  const toast = useToast();
 
   const handleEmailChange = (e) => {
     const email = e.nativeEvent.text;
@@ -33,11 +43,24 @@ function Login() {
   };
 
   const handleLogin = () => {
-    toast.show({
-      title: "Invalid email address",
-      variant: "top-accent",
-      description: "Please enter a valid email address",
-    });
+    console.log("auth: ", auth);
+  };
+
+  const showToast = () => {
+    if (!toast.isActive(id)) {
+      toast.show({
+        placement: "top",
+        render: () => (
+          <ToastAlert
+            id={id}
+            title='Invalid email address'
+            variant='subtle'
+            description='Please enter a valid email address'
+            isClosable
+          />
+        ),
+      });
+    }
   };
 
   return (
@@ -54,6 +77,7 @@ function Login() {
           marginTop={8}
         />
         <Box
+          marginTop={3}
           width='100%'
           display='flex'
           flexDirection='column'
@@ -91,7 +115,6 @@ function Login() {
                   marginLeft={4}
                 />
               }
-              autoCapitalize={false}
               placeholder='example@domain.com'
               onChange={handleEmailChange}
             />

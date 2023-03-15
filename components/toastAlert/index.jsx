@@ -1,3 +1,12 @@
+import {
+  Alert,
+  CloseIcon,
+  HStack,
+  IconButton,
+  Text,
+  useToast,
+  VStack,
+} from "native-base";
 import React from "react";
 
 const ToastAlert = ({
@@ -9,6 +18,8 @@ const ToastAlert = ({
   isClosable,
   ...rest
 }) => {
+  const toast = useToast();
+
   return (
     <Alert
       maxWidth='100%'
@@ -17,8 +28,9 @@ const ToastAlert = ({
       status={status ? status : "info"}
       variant={variant}
       {...rest}
+      bgColor='success.200'
     >
-      <VStack space={1} flexShrink={1} w='100%'>
+      <VStack space={1} flexShrink={1} w='90%'>
         <HStack
           flexShrink={1}
           alignItems='center'
