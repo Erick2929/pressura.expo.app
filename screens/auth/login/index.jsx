@@ -44,6 +44,19 @@ function Login() {
 
   const handleLogin = () => {
     console.log("auth: ", auth);
+    // try {
+    //   const user = await signInWithEmailAndPassword(
+    //     auth,
+    //     loginEmail,
+    //     loginPassword
+    //   );
+    //   //setUser(user)
+    //   console.log(user);
+    //   navigate("/mainView");
+    // } catch (error) {
+    //   console.log(error.message);
+    //   alert(error.message);
+    // }
   };
 
   const showToast = () => {
