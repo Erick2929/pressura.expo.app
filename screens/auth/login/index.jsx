@@ -133,7 +133,6 @@ function Login() {
                 backgroundColor: "rgba(37,152,145,0.2)",
               }}
               h={50}
-              autoCapitalize={false}
               placeholder='Contraseña'
               onChange={handlePasswordChange}
               InputRightElement={

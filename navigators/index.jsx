@@ -1,8 +1,9 @@
 import { Text } from "native-base";
 import React from "react";
+import AuthNavigator from "./auth";
 
 function Navigators() {
-  return <Text>Navigators</Text>;
+  return <AuthNavigator />;
 }
 
 export default Navigators;
