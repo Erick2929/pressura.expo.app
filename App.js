@@ -7,8 +7,7 @@ import Login from "./screens/auth/login";
 export default function App() {
   return (
     <NativeBaseProvider>
-      {/* <Navigators /> */}
-      <Login />
+      <Navigators />
     </NativeBaseProvider>
   );
 }
