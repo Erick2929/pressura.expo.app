@@ -22,9 +22,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { app } from "../../../config/firebase/firebase";
+import { themeColors } from "../../../config/theme";
+import { useSession } from "../../../providers/session";
 
 function Login() {
   const toast = useToast();
+  const { login } = useSession();
   const id = "test-toast";
   const auth = getAuth(app);
 
@@ -43,23 +46,10 @@ function Login() {
   };
 
   const handleLogin = () => {
-    console.log("auth: ", auth);
-    // try {
-    //   const user = await signInWithEmailAndPassword(
-    //     auth,
-    //     loginEmail,
-    //     loginPassword
-    //   );
-    //   //setUser(user)
-    //   console.log(user);
-    //   navigate("/mainView");
-    // } catch (error) {
-    //   console.log(error.message);
-    //   alert(error.message);
-    // }
+    login(email, password);
   };
 
-  const showToast = () => {
+  const showInvalidEmail = () => {
     if (!toast.isActive(id)) {
       toast.show({
         placement: "top",
@@ -111,8 +101,8 @@ function Login() {
               variant='outline'
               fontSize='16px'
               _focus={{
-                borderColor: "#259891",
-                backgroundColor: "rgba(37,152,145,0.2)",
+                borderColor: themeColors.primario,
+                backgroundColor: themeColors.primarioTransparente,
               }}
               w={{
                 base: "75%",
@@ -142,8 +132,8 @@ function Login() {
               fontSize='16px'
               type={show ? "text" : "password"}
               _focus={{
-                borderColor: "#259891",
-                backgroundColor: "rgba(37,152,145,0.2)",
+                borderColor: themeColors.primario,
+                backgroundColor: themeColors.primarioTransparente,
               }}
               h={50}
               placeholder='Contraseña'
@@ -169,7 +159,7 @@ function Login() {
         </Box>
 
         <Button
-          bg='#259891'
+          bg={themeColors.primario}
           marginTop='auto'
           style={{ width: "90%", height: 52 }}
           rounded='xl'
@@ -183,7 +173,7 @@ function Login() {
         <Text fontSize='md' marginTop='3.0' marginBottom='8.0'>
           ¿No tienes cuenta?{" "}
           <Link href='https://www.pideloseguro.net/register'>
-            <Text fontWeight='bold' fontSize='md' color='#259891'>
+            <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
               Registrate
             </Text>
           </Link>
