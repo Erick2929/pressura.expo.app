@@ -25,7 +25,7 @@ import { app } from "../../../config/firebase/firebase";
 import { themeColors } from "../../../config/theme";
 import { useSession } from "../../../providers/session";
 
-function Login() {
+function Login({ navigation }) {
   const toast = useToast();
   const { login } = useSession();
   const id = "test-toast";
@@ -172,7 +172,7 @@ function Login() {
 
         <Text fontSize='md' marginTop='3.0' marginBottom='8.0'>
           ¿No tienes cuenta?{" "}
-          <Link href='https://www.pideloseguro.net/register'>
+          <Link onPress={() => navigation.navigate("Signin")}>
             <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
               Registrate
             </Text>
