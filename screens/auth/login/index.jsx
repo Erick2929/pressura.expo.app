@@ -3,10 +3,12 @@ import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import Isotype from "../../../assets/logos/pressura-logo.png";
 import { FontAwesome } from "@expo/vector-icons";
 import {
+  Alert,
   Box,
   Button,
   Center,
   FormControl,
+  HStack,
   Icon,
   Image,
   Input,
@@ -14,20 +16,17 @@ import {
   Pressable,
   Text,
   useToast,
+  VStack,
 } from "native-base";
 import ToastAlert from "../../../components/toastAlert";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { app } from "../../../config/firebase/firebase";
 import { themeColors } from "../../../config/theme";
 import { useSession } from "../../../providers/session";
 
 function Login({ navigation }) {
   const toast = useToast();
-  const { login } = useSession();
+  const { login, loginError } = useSession();
   const id = "test-toast";
   const auth = getAuth(app);
 
@@ -94,7 +93,15 @@ function Login({ navigation }) {
           </Text>
         </Box>
 
-        <Box marginTop={8}>
+        <Box
+          marginTop={8}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormControl>
             <FormControl.Label>Correo electronico</FormControl.Label>
             <Input
@@ -156,6 +163,20 @@ function Login({ navigation }) {
               }
             />
           </FormControl>
+          {loginError && (
+            <Alert status={"error"} marginTop={4}>
+              <VStack space={1} flexShrink={1} w='100%'>
+                <HStack flexShrink={1} space={1} justifyContent='space-between'>
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt='1' />
+                    <Text fontSize='md' color='coolGray.800'>
+                      {"Usuario o contraseña incorrectos"}
+                    </Text>
+                  </HStack>
+                </HStack>
+              </VStack>
+            </Alert>
+          )}
         </Box>
 
         <Button

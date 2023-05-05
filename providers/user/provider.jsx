@@ -18,10 +18,6 @@ const UserProvider = ({ children }) => {
     }
   });
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, []);
-
   return (
     <userContext.Provider
       value={{

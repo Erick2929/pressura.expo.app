@@ -11,6 +11,7 @@ const sessionContext = createContext({});
 
 const SessionProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const register = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -31,12 +32,12 @@ const SessionProvider = ({ children }) => {
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        setLoginError(false);
         const user = userCredential.user;
         setIsLogged(true);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        setLoginError(true);
       });
   };
 
@@ -57,6 +58,7 @@ const SessionProvider = ({ children }) => {
     <sessionContext.Provider
       value={{
         isLogged,
+        loginError,
         login,
         logout,
         register,
