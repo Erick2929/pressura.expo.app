@@ -3,10 +3,12 @@ import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import Isotype from "../../../assets/logos/pressura-logo.png";
 import { FontAwesome } from "@expo/vector-icons";
 import {
+  Alert,
   Box,
   Button,
   Center,
   FormControl,
+  HStack,
   Icon,
   Image,
   Input,
@@ -14,17 +16,17 @@ import {
   Pressable,
   Text,
   useToast,
+  VStack,
 } from "native-base";
 import ToastAlert from "../../../components/toastAlert";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { app } from "../../../config/firebase/firebase";
+import { themeColors } from "../../../config/theme";
+import { useSession } from "../../../providers/session";
 
-function Login() {
+function Login({ navigation }) {
   const toast = useToast();
+  const { login, loginError } = useSession();
   const id = "test-toast";
   const auth = getAuth(app);
 
@@ -43,10 +45,10 @@ function Login() {
   };
 
   const handleLogin = () => {
-    console.log("auth: ", auth);
+    login(email, password);
   };
 
-  const showToast = () => {
+  const showInvalidEmail = () => {
     if (!toast.isActive(id)) {
       toast.show({
         placement: "top",
@@ -91,15 +93,23 @@ function Login() {
           </Text>
         </Box>
 
-        <Box marginTop={8}>
+        <Box
+          marginTop={8}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormControl>
             <FormControl.Label>Correo electronico</FormControl.Label>
             <Input
               variant='outline'
               fontSize='16px'
               _focus={{
-                borderColor: "#259891",
-                backgroundColor: "rgba(37,152,145,0.2)",
+                borderColor: themeColors.primario,
+                backgroundColor: themeColors.primarioTransparente,
               }}
               w={{
                 base: "75%",
@@ -129,8 +139,8 @@ function Login() {
               fontSize='16px'
               type={show ? "text" : "password"}
               _focus={{
-                borderColor: "#259891",
-                backgroundColor: "rgba(37,152,145,0.2)",
+                borderColor: themeColors.primario,
+                backgroundColor: themeColors.primarioTransparente,
               }}
               h={50}
               placeholder='Contraseña'
@@ -153,10 +163,24 @@ function Login() {
               }
             />
           </FormControl>
+          {loginError && (
+            <Alert status={"error"} marginTop={4}>
+              <VStack space={1} flexShrink={1} w='100%'>
+                <HStack flexShrink={1} space={1} justifyContent='space-between'>
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt='1' />
+                    <Text fontSize='md' color='coolGray.800'>
+                      {"Usuario o contraseña incorrectos"}
+                    </Text>
+                  </HStack>
+                </HStack>
+              </VStack>
+            </Alert>
+          )}
         </Box>
 
         <Button
-          bg='#259891'
+          bg={themeColors.primario}
           marginTop='auto'
           style={{ width: "90%", height: 52 }}
           rounded='xl'
@@ -169,8 +193,8 @@ function Login() {
 
         <Text fontSize='md' marginTop='3.0' marginBottom='8.0'>
           ¿No tienes cuenta?{" "}
-          <Link href='https://www.pideloseguro.net/register'>
-            <Text fontWeight='bold' fontSize='md' color='#259891'>
+          <Link onPress={() => navigation.navigate("Signin")}>
+            <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
               Registrate
             </Text>
           </Link>
