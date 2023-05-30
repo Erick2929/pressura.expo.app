@@ -1,7 +1,14 @@
 import { onAuthStateChanged } from "firebase/auth";
+
+import React, { useEffect, useState } from "react";
+import ViewButton from "../../../components/viewButton";
+import { auth } from "../../../config/firebase/firebase";
+import { useSession } from "../../../providers/session";
+import { useUser } from "../../../providers/user";
+import Isotype from "../../../assets/logos/pressura-logo.png";
 import {
-  Box,
   Center,
+  Box,
   Flex,
   HStack,
   Image,
@@ -10,19 +17,13 @@ import {
   Text,
   VStack,
 } from "native-base";
-import React, { useEffect, useState } from "react";
-import ViewButton from "../../../components/viewButton";
-import { auth } from "../../../config/firebase/firebase";
-import { useSession } from "../../../providers/session";
-import { useUser } from "../../../providers/user";
 import { MaterialIcons } from "@expo/vector-icons";
 import { themeColors } from "../../../config/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import Isotype from "../../../assets/logos/pressura-logo.png";
 import MainButton from "../../../components/mainButton";
 
-function MainScreen() {
+function MainScreen({ navigation }) {
   const { logout } = useSession();
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState("");
@@ -41,10 +42,6 @@ function MainScreen() {
       // ...
     }
   });
-
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
@@ -78,7 +75,11 @@ function MainScreen() {
       )}
 
       <VStack w={"100%"} alignItems='center' space={2} mt={4}>
-        <MainButton title={"Tomar presión"} w='82%'>
+        <MainButton
+          title={"Tomar presión"}
+          w='82%'
+          action={() => navigation.navigate("Pressure")}
+        >
           <FontAwesome name='heart' size={24} color='white' />
         </MainButton>
 
