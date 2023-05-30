@@ -6,7 +6,7 @@ import { auth } from "../../../config/firebase/firebase";
 import { useSession } from "../../../providers/session";
 import { useUser } from "../../../providers/user";
 
-function MainScreen() {
+function MainScreen({ navigation }) {
   const { logout } = useSession();
   const [userInfo, setUserInfo] = useState({});
   // const { user, setUserInfo } = useUser();
@@ -27,8 +27,62 @@ function MainScreen() {
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
-      <Text>{userInfo.email}</Text>
-      <ViewButton action={logout}>Cerrar Sesion</ViewButton>
+      <Flex w={"90%"} mt={1} alignItems='flex-end'>
+        <Pressable onPress={logout}>
+          <Box
+            paddingX={3}
+            paddingY={1}
+            bgColor={themeColors.primario}
+            borderRadius={4}
+          >
+            <MaterialIcons name='logout' size={24} color='white' />
+          </Box>
+        </Pressable>
+      </Flex>
+      <Image
+        style={{ height: 100, width: 125 }}
+        alt='logo'
+        source={Isotype}
+        marginTop={8}
+      />
+
+      {userName ? (
+        <Text fontSize={30} mt={2} color={themeColors.primario}>
+          Buen dia {userName}
+        </Text>
+      ) : (
+        <Text fontSize={30} mt={2} color={themeColors.primario}>
+          {userInfo.email}
+        </Text>
+      )}
+
+      <VStack w={"100%"} alignItems='center' space={2} mt={4}>
+        <MainButton
+          title={"Tomar presión"}
+          w='82%'
+          action={() => navigation.navigate("Pressure")}
+        >
+          <FontAwesome name='heart' size={24} color='white' />
+        </MainButton>
+
+        <HStack w={"100%"} justifyContent='center' space={2}>
+          <MainButton title={"Perfil"} w='40%'>
+            <Ionicons name='person-circle-outline' size={24} color='white' />
+          </MainButton>
+          <MainButton title={"Hábitos"} w='40%'>
+            <FontAwesome name='apple' size={24} color='white' />
+          </MainButton>
+        </HStack>
+
+        <HStack w={"100%"} justifyContent='center' space={2}>
+          <MainButton title={"Doctores"} w='40%'>
+            <Ionicons name='medkit' size={24} color='white' />
+          </MainButton>
+          <MainButton title={"Historial"} w='40%'>
+            <FontAwesome name='list-alt' size={24} color='white' />
+          </MainButton>
+        </HStack>
+      </VStack>
     </Center>
   );
 }
