@@ -11,7 +11,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { themeColors } from "../../../config/theme";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
-import Isotype from "../../../assets/logos/pressura-logo.png";
 
 const Pressure = ({ navigation }) => {
   const [sistolicMessure, setSistolicMessure] = useState(0);

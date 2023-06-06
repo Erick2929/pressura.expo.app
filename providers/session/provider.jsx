@@ -5,7 +5,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../../config/firebase/firebase";
+import { auth, db } from "../../config/firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const sessionContext = createContext({});
 
@@ -13,12 +14,20 @@ const SessionProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
-  const register = (email, password) => {
+  const handleCreatePatient = async (uid, name, email) => {
+    await setDoc(doc(db, "Paciente", uid), {
+      Nombre: name,
+      Correo: email,
+    });
+  };
+
+  const register = (email, password, name) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // ...
+        // console.log("user: ", user);
+        handleCreatePatient(user.uid, name, email);
       })
       .catch((error) => {
         const errorCode = error.code;

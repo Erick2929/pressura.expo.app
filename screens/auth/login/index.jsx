@@ -191,7 +191,7 @@ function Login({ navigation }) {
           </Text>
         </Button>
 
-        <Text fontSize='md' marginTop='3.0' marginBottom='8.0'>
+        <Text fontSize='md' marginTop='3.0' marginBottom='1.0'>
           ¿No tienes cuenta?{" "}
           <Link onPress={() => navigation.navigate("Signin")}>
             <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
@@ -199,6 +199,11 @@ function Login({ navigation }) {
             </Text>
           </Link>
         </Text>
+        <Link onPress={() => navigation.navigate("Recover")} marginBottom='8.0'>
+          <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
+            Olvide mi contraseña
+          </Text>
+        </Link>
       </Center>
     </TouchableWithoutFeedback>
   );
