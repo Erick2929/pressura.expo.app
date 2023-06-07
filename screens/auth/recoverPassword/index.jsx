@@ -153,9 +153,9 @@ function RecoverPassword({ navigation }) {
           )}
         </Box>
 
+        <Box h={"25%"}></Box>
         <Button
           bg={themeColors.primario}
-          marginTop='auto'
           style={{ width: "90%", height: 52 }}
           mb={"50px"}
           rounded='xl'

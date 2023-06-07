@@ -58,7 +58,7 @@ function MainScreen({ navigation }) {
         <MainButton
           title={"Tomar presión"}
           w='82%'
-          action={() => navigation.navigate("Pressure")}
+          action={() => navigation.navigate("EmotionalState")}
         >
           <FontAwesome name='heart' size={24} color='white' />
         </MainButton>

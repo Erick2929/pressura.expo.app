@@ -178,10 +178,10 @@ function Login({ navigation }) {
             </Alert>
           )}
         </Box>
-
+        <Box h={"25%"}></Box>
         <Button
           bg={themeColors.primario}
-          marginTop='auto'
+          marginTop={0}
           style={{ width: "90%", height: 52 }}
           rounded='xl'
           onPress={handleLogin}
