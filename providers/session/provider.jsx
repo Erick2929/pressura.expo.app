@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   createUserWithEmailAndPassword,
@@ -6,28 +6,67 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../../config/firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
 
 const sessionContext = createContext({});
 
 const SessionProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [uid, setUid] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    // name: "",
+    // email: "",
+    // height: "",
+    // address: 0,
+    // dob: "",
+    // id: "",
+    // weight: 0,
+    // gender: "",
+  });
 
   const handleCreatePatient = async (uid, name, email) => {
     await setDoc(doc(db, "Paciente", uid), {
+      Altura: 0,
       Nombre: name,
-      Correo: email,
+      CorreoElectronico: email,
+      Direccion: "",
+      FechaDeNacimiento: "",
+      IDPaciente: email,
+      Peso: 0,
+      Sexo: 0,
     });
   };
+
+  const handleReadUserDB = async () => {
+    const docRef = doc(db, "Paciente", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      const user = docSnap.data();
+
+      setUserInfo(user);
+
+      // escucha el audio en el grupo de wasap Docs y links imprtantes HAZLOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  };
+
+  useEffect(() => {
+    if (isLogged) {
+      handleReadUserDB();
+    }
+  }, [isLogged]);
 
   const register = (email, password, name) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        // console.log("user: ", user);
         handleCreatePatient(user.uid, name, email);
+        setUid(user.uid);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -43,6 +82,7 @@ const SessionProvider = ({ children }) => {
       .then((userCredential) => {
         setLoginError(false);
         const user = userCredential.user;
+        setUid(user.uid);
         setIsLogged(true);
       })
       .catch((error) => {
@@ -71,6 +111,7 @@ const SessionProvider = ({ children }) => {
         login,
         logout,
         register,
+        userInfo,
       }}
     >
       {children}

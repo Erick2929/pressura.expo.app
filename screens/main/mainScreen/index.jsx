@@ -1,8 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
-
 import React, { useEffect, useState } from "react";
-import ViewButton from "../../../components/viewButton";
-import { auth } from "../../../config/firebase/firebase";
 import { useSession } from "../../../providers/session";
 import { useUser } from "../../../providers/user";
 import Isotype from "../../../assets/logos/pressura-logo.png";
@@ -25,23 +21,7 @@ import MainButton from "../../../components/mainButton";
 
 function MainScreen({ navigation }) {
   const { logout } = useSession();
-  const [userInfo, setUserInfo] = useState({});
-  const [userName, setUserName] = useState("");
-  // const { user, setUserInfo } = useUser();
-
-  const handleLogout = () => {
-    logout();
-  };
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUserInfo(user);
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+  const { userInfo } = useSession();
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
@@ -64,13 +44,13 @@ function MainScreen({ navigation }) {
         marginTop={8}
       />
 
-      {userName ? (
+      {userInfo.Nombre ? (
         <Text fontSize={30} mt={2} color={themeColors.primario}>
-          Buen dia {userName}
+          Buen dia {userInfo.Nombre}
         </Text>
       ) : (
         <Text fontSize={30} mt={2} color={themeColors.primario}>
-          {userInfo.email}
+          {userInfo.CorreoElectronico}
         </Text>
       )}
 
