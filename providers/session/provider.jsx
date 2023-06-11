@@ -6,8 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../../config/firebase/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { async } from "@firebase/util";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 const sessionContext = createContext({});
 
@@ -25,6 +24,16 @@ const SessionProvider = ({ children }) => {
     // weight: 0,
     // gender: "",
   });
+
+  const updateUserValues = async (collection, document, paramObj) => {
+    try {
+      const docRef = doc(db, collection, document);
+      await updateDoc(docRef, paramObj);
+      console.log("Documento actualizado exitosamente!");
+    } catch (error) {
+      console.error("Error al actualizar el documento:", error);
+    }
+  };
 
   const handleCreatePatient = async (uid, name, email) => {
     await setDoc(doc(db, "Paciente", uid), {
@@ -112,6 +121,7 @@ const SessionProvider = ({ children }) => {
         logout,
         register,
         userInfo,
+        updateUserValues,
       }}
     >
       {children}

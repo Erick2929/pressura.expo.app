@@ -15,10 +15,23 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { themeColors } from "../../../config/theme";
 import Slider from "@react-native-community/slider";
 import { FontAwesome } from "@expo/vector-icons";
+import { useSession } from "../../../providers/session";
 
 function EmotionalStateScreen({ navigation }) {
   const [emotionalState, setEmotionalState] = useState(100);
   const initialFocusRef = useRef(null);
+  const { updateUserValues } = useSession();
+
+  //   ESTAS TRATANDO DE HACER QUE ESTA FUNCION JALE PARA LAS PANTALLAS DE FLUJO DE PRESION
+  //   PROBABLEMENTE TENDRAS QUE HACER OTRA FUNCUION LLAMADA createUserValues o similar,
+  //   en donde estes enviando los registros de presion
+  const handleNextView = () => {
+    // etsa funcion de update user values sirve para actualizar valores exsistentes en la base de datos
+    // updateUserValues("Paciente", "1@tec.mx", {
+    //   Altura: 1.6,
+    // });
+    navigation.navigate("Pressure");
+  };
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -162,7 +175,8 @@ function EmotionalStateScreen({ navigation }) {
                 marginTop={0}
                 style={{ width: "90%", height: 52 }}
                 rounded='xl'
-                onPress={() => navigation.navigate("Pressure")}
+                // onPress={() => navigation.navigate("Pressure")}
+                onPress={handleNextView}
               >
                 <Text fontSize='xl' bold color='#fff'>
                   Enviar

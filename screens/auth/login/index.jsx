@@ -178,7 +178,7 @@ function Login({ navigation }) {
             </Alert>
           )}
         </Box>
-        <Box h={"25%"}></Box>
+        <Box h={"15%"}></Box>
         <Button
           bg={themeColors.primario}
           marginTop={0}
