@@ -77,7 +77,7 @@ function MainScreen({ navigation }) {
             <Ionicons name='medkit' size={24} color='white' />
           </MainButton>
           <MainButton
-            action={() => createUserValues()}
+            action={() => navigation.navigate("History")}
             title={"Historial"}
             w='40%'
           >

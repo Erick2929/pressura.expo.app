@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import ConfirmData from "../../screens/main/confirmDataScreen";
 import EmotionalStateScreen from "../../screens/main/emotionalStateScreen";
+import History from "../../screens/main/historyScreen";
 import MainScreen from "../../screens/main/mainScreen";
 import Pressure from "../../screens/main/pressureScreen";
 
@@ -31,6 +32,11 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
           name='ConfirmData'
           component={ConfirmData}
+        />
+        <StackScreen
+          options={{ headerShown: false }}
+          name='History'
+          component={History}
         />
       </StackNavigator>
     </NavigationContainer>
