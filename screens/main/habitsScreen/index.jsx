@@ -16,9 +16,9 @@ import { useSession } from "../../../providers/session";
 
 const Habits = ({ navigation }) => {
   const { createUserValues, userInfo } = useSession();
-  const [foodQ, setFoodQ] = useState(0);
-  const [exerciseQ, setExerciseQ] = useState(0);
-  const [medicineQ, setMedicineQ] = useState(0);
+  const [foodQ, setFoodQ] = useState(50);
+  const [exerciseQ, setExerciseQ] = useState(50);
+  const [medicineQ, setMedicineQ] = useState(50);
 
   const handleSendInfo = () => {
     createUserValues("Habitos", {
