@@ -19,6 +19,7 @@ import { useSession } from "../../../providers/session";
 
 function EmotionalStateScreen({ navigation }) {
   const [emotionalState, setEmotionalState] = useState(100);
+  const [comment, setComment] = useState("");
   const initialFocusRef = useRef(null);
   const { updateUserValues } = useSession();
 
@@ -30,7 +31,10 @@ function EmotionalStateScreen({ navigation }) {
     // updateUserValues("Paciente", "1@tec.mx", {
     //   Altura: 1.6,
     // });
-    navigation.navigate("Pressure");
+    navigation.navigate("Pressure", {
+      emotionalState: emotionalState,
+      comment: comment,
+    });
   };
   return (
     <TouchableWithoutFeedback
@@ -166,6 +170,7 @@ function EmotionalStateScreen({ navigation }) {
                       md: "25%",
                     }}
                     h={50}
+                    onChange={(e) => setComment(e.nativeEvent.text)}
                   />
                 </>
               )}

@@ -194,7 +194,14 @@ function Login({ navigation }) {
         <Text fontSize='md' marginTop='3.0' marginBottom='1.0'>
           ¿No tienes cuenta?{" "}
           <Link onPress={() => navigation.navigate("Signin")}>
-            <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
+            <Text
+              // style={{
+              //   backgroundColor: "blue",
+              // }}
+              fontWeight='bold'
+              fontSize='md'
+              color={themeColors.primario}
+            >
               Registrate
             </Text>
           </Link>

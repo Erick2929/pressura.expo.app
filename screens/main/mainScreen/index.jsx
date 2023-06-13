@@ -21,7 +21,7 @@ import MainButton from "../../../components/mainButton";
 
 function MainScreen({ navigation }) {
   const { logout } = useSession();
-  const { userInfo } = useSession();
+  const { userInfo, createUserValues } = useSession();
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
@@ -76,7 +76,11 @@ function MainScreen({ navigation }) {
           <MainButton title={"Doctores"} w='40%'>
             <Ionicons name='medkit' size={24} color='white' />
           </MainButton>
-          <MainButton title={"Historial"} w='40%'>
+          <MainButton
+            action={() => createUserValues()}
+            title={"Historial"}
+            w='40%'
+          >
             <FontAwesome name='list-alt' size={24} color='white' />
           </MainButton>
         </HStack>

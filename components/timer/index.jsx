@@ -5,7 +5,7 @@ import ProgressCircle from "react-native-progress-circle";
 import { themeColors } from "../../config/theme";
 
 const Timer = ({ action }) => {
-  let time = 120;
+  let time = 119;
   //   let time = 3;
   const [timeState, setTimeState] = useState(120);
 

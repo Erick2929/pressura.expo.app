@@ -16,8 +16,11 @@ import { themeColors } from "../../../config/theme";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import MainButton from "../../../components/mainButton";
 import Timer from "../../../components/timer";
+import { useRoute } from "@react-navigation/native";
 
 const Pressure = ({ navigation }) => {
+  const route = useRoute();
+  const { emotionalState, comment } = route.params;
   const [sistolicMessure1, setSistolicMessure1] = useState(0);
   const [diastolicMessure1, setDiastolicMessure1] = useState(0);
   const [cardiacPulse1, setCardiacPulse1] = useState(0);
@@ -31,15 +34,113 @@ const Pressure = ({ navigation }) => {
   const [timerView, setTimerView] = useState(false);
 
   const handleNextMeassure = () => {
+    if (
+      meassureCount === 0 &&
+      (sistolicMessure1 === 0 || diastolicMessure1 === 0 || cardiacPulse1 === 0)
+    ) {
+      alert("Favor de ingresar todas las medidas");
+      return;
+    }
+    if (
+      meassureCount === 0 &&
+      !validMeassures(sistolicMessure1, diastolicMessure1)
+    ) {
+      alert(
+        "Favor de asegurar que la Medida Superior sea mayor a la Medida Inferior"
+      );
+      return;
+    }
+    if (
+      meassureCount === 1 &&
+      !validMeassures(sistolicMessure2, diastolicMessure2)
+    ) {
+      alert(
+        "Favor de asegurar que la Medida Superior sea mayor a la Medida Inferior"
+      );
+      return;
+    }
+    if (
+      meassureCount === 2 &&
+      !validMeassures(sistolicMessure3, diastolicMessure3)
+    ) {
+      alert(
+        "Favor de asegurar que la Medida Superior sea mayor a la Medida Inferior"
+      );
+      return;
+    }
+    // if (
+    //   meassureCount === 1 &&
+    //   (sistolicMessure2 === 0 || diastolicMessure2 === 0 || cardiacPulse2 === 0)
+    // ) {
+    //   alert("Favor de ingresar todas las medidas");
+    //   return;
+    // }
+    if (meassureCount === 2) {
+      handleFinsh();
+    }
     setTimerView(true);
     setMeassureCount(meassureCount + 1);
   };
 
-  // ESTAS HACIENDO QUE LAS MEDIDAS YA ESTEN SIENDO CONTADAS CON EL ESTADO DE MEASSURECOUNT
-  // DEBES DE HACER QUE YA SEA POSIBLE EL SUBIR LOS DATOS Y PARA ESO PROBABLEMENTE DEBES DE CREAR UNA
-  // FUNCION EN EL PROVIDER QUE SE LLAME CREARDATOS O ALGO ASI
-  // CHECA LA EMOTIONAL STATE SCREEN
+  const validMeassures = (sis, dis) => {
+    if (sis === null || dis === null) return true;
+    return parseFloat(sis) > parseFloat(dis);
+  };
 
+  const handleSistolicChange = (e) => {
+    const messure = e.nativeEvent.text;
+    if (meassureCount === 0) {
+      setSistolicMessure1(messure);
+    } else if (meassureCount === 1) {
+      setSistolicMessure2(messure);
+    } else if (meassureCount === 2) {
+      setSistolicMessure3(messure);
+    }
+  };
+  const handleDiastolicChange = (e) => {
+    const messure = e.nativeEvent.text;
+    if (meassureCount === 0) {
+      setDiastolicMessure1(messure);
+    } else if (meassureCount === 1) {
+      setDiastolicMessure2(messure);
+    } else if (meassureCount === 2) {
+      setDiastolicMessure3(messure);
+    }
+  };
+
+  const handleCardiacPulseChange = (e) => {
+    const messure = e.nativeEvent.text;
+    if (meassureCount === 0) {
+      setCardiacPulse1(messure);
+    } else if (meassureCount === 1) {
+      setCardiacPulse2(messure);
+    } else if (meassureCount === 2) {
+      setCardiacPulse3(messure);
+    }
+  };
+
+  const handleFinsh = () => {
+    if (
+      meassureCount === 0 &&
+      (sistolicMessure1 === 0 || diastolicMessure1 === 0 || cardiacPulse1 === 0)
+    ) {
+      alert("Favor de ingresar todas las medidas");
+      return;
+    }
+    navigation.navigate("ConfirmData", {
+      comment: comment,
+      emotionalState: emotionalState,
+      sis1: sistolicMessure1,
+      sis2: sistolicMessure2,
+      sis3: sistolicMessure3,
+      dis1: diastolicMessure1,
+      dis2: diastolicMessure2,
+      dis3: diastolicMessure3,
+      cp1: cardiacPulse1,
+      cp2: cardiacPulse2,
+      cp3: cardiacPulse3,
+    });
+  };
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -83,6 +184,7 @@ const Pressure = ({ navigation }) => {
                 variant='outline'
                 fontSize='16px'
                 type='number'
+                keyboardType='numeric'
                 _focus={{
                   borderColor: themeColors.primario,
                   backgroundColor: themeColors.primarioTransparente,
@@ -93,9 +195,7 @@ const Pressure = ({ navigation }) => {
                 }}
                 h={50}
                 placeholder='120'
-                onChange={(e) => {
-                  setSistolicMessure(e.nativeEvent.text);
-                }}
+                onChange={handleSistolicChange}
               />
 
               <FormControl.Label marginTop={4}>
@@ -109,13 +209,14 @@ const Pressure = ({ navigation }) => {
                 variant='outline'
                 fontSize='16px'
                 type={"number"}
+                keyboardType='numeric'
                 _focus={{
                   borderColor: themeColors.primario,
                   backgroundColor: themeColors.primarioTransparente,
                 }}
                 h={50}
                 placeholder='80'
-                onChange={(e) => setDiastolicMessure(e.nativeEvent.text)}
+                onChange={handleDiastolicChange}
               />
               <FormControl.Label marginTop={4}>
                 Pulso Cardiaco
@@ -128,13 +229,14 @@ const Pressure = ({ navigation }) => {
                 variant='outline'
                 fontSize='16px'
                 type={"number"}
+                keyboardType='numeric'
                 _focus={{
                   borderColor: themeColors.primario,
                   backgroundColor: themeColors.primarioTransparente,
                 }}
                 h={50}
                 placeholder='72'
-                onChange={(e) => setCardiacPulse(e.nativeEvent.text)}
+                onChange={handleCardiacPulseChange}
               />
             </FormControl>
           </Box>
@@ -144,17 +246,29 @@ const Pressure = ({ navigation }) => {
             bgColor='gray.200'
             rounded='lg'
           >
-            <Box bgColor={themeColors.primarioTransparente} p={1} rounded='lg'>
+            <Box
+              bgColor={meassureCount === 0 && themeColors.primarioTransparente}
+              p={1}
+              rounded='lg'
+            >
               <Text bold color='gray.500'>
                 Primer medida
               </Text>
             </Box>
-            <Box bgColor={themeColors.primarioTransparente} p={1} rounded='lg'>
+            <Box
+              bgColor={meassureCount === 1 && themeColors.primarioTransparente}
+              p={1}
+              rounded='lg'
+            >
               <Text bold color='gray.500'>
                 Segunda medida
               </Text>
             </Box>
-            <Box bgColor={themeColors.primarioTransparente} p={1} rounded='lg'>
+            <Box
+              bgColor={meassureCount === 2 && themeColors.primarioTransparente}
+              p={1}
+              rounded='lg'
+            >
               <Text bold color='gray.500'>
                 Tercera medida
               </Text>
@@ -174,7 +288,7 @@ const Pressure = ({ navigation }) => {
             bg={themeColors.primario}
             marginTop={6}
             rounded='xl'
-            // onPress={handleLogin}
+            onPress={handleFinsh}
           >
             <Text bold color='#fff'>
               Finalizar

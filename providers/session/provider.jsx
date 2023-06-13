@@ -6,7 +6,14 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../../config/firebase/firebase";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const sessionContext = createContext({});
 
@@ -24,6 +31,16 @@ const SessionProvider = ({ children }) => {
     // weight: 0,
     // gender: "",
   });
+
+  const createUserValues = async (collectionName, paramObj) => {
+    try {
+      const collectionRef = collection(db, collectionName);
+      await addDoc(collectionRef, paramObj);
+      console.log("Documento actualizado exitosamente!");
+    } catch (error) {
+      console.error("Error al actualizar el documento:", error);
+    }
+  };
 
   const updateUserValues = async (collection, document, paramObj) => {
     try {
@@ -56,10 +73,7 @@ const SessionProvider = ({ children }) => {
       const user = docSnap.data();
 
       setUserInfo(user);
-
-      // escucha el audio en el grupo de wasap Docs y links imprtantes HAZLOOOOOOOOOOOOOOOOOOOOOOOOOOO
     } else {
-      // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
   };
@@ -122,6 +136,7 @@ const SessionProvider = ({ children }) => {
         register,
         userInfo,
         updateUserValues,
+        createUserValues,
       }}
     >
       {children}
