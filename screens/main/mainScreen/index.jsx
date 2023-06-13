@@ -67,7 +67,11 @@ function MainScreen({ navigation }) {
           <MainButton title={"Perfil"} w='40%'>
             <Ionicons name='person-circle-outline' size={24} color='white' />
           </MainButton>
-          <MainButton title={"Hábitos"} w='40%'>
+          <MainButton
+            action={() => navigation.navigate("Habits")}
+            title={"Hábitos"}
+            w='40%'
+          >
             <FontAwesome name='apple' size={24} color='white' />
           </MainButton>
         </HStack>
