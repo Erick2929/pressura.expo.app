@@ -64,7 +64,11 @@ function MainScreen({ navigation }) {
         </MainButton>
 
         <HStack w={"100%"} justifyContent='center' space={2}>
-          <MainButton title={"Perfil"} w='40%'>
+          <MainButton
+            action={() => navigation.navigate("Profile")}
+            title={"Perfil"}
+            w='40%'
+          >
             <Ionicons name='person-circle-outline' size={24} color='white' />
           </MainButton>
           <MainButton

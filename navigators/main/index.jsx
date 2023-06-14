@@ -7,6 +7,7 @@ import Habits from "../../screens/main/habitsScreen";
 import History from "../../screens/main/historyScreen";
 import MainScreen from "../../screens/main/mainScreen";
 import Pressure from "../../screens/main/pressureScreen";
+import Profile from "../../screens/main/profileScreen";
 
 const MainNavigator = () => {
   const { Navigator: StackNavigator, Screen: StackScreen } =
@@ -43,6 +44,11 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
           name='Habits'
           component={Habits}
+        />
+        <StackScreen
+          options={{ headerShown: false }}
+          name='Profile'
+          component={Profile}
         />
       </StackNavigator>
     </NavigationContainer>
