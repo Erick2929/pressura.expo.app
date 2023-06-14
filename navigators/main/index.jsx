@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import ConfirmData from "../../screens/main/confirmDataScreen";
+import Doctors from "../../screens/main/doctorsScreen";
 import EmotionalStateScreen from "../../screens/main/emotionalStateScreen";
 import Habits from "../../screens/main/habitsScreen";
 import History from "../../screens/main/historyScreen";
@@ -49,6 +50,11 @@ const MainNavigator = () => {
           options={{ headerShown: false }}
           name='Profile'
           component={Profile}
+        />
+        <StackScreen
+          options={{ headerShown: false }}
+          name='Doctors'
+          component={Doctors}
         />
       </StackNavigator>
     </NavigationContainer>

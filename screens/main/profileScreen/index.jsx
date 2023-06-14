@@ -54,10 +54,12 @@ const Profile = ({ navigation }) => {
           <Box
             paddingX={5}
             paddingY={1}
-            bgColor={"rgba(0,0,0,0)"}
+            bgColor={themeColors.primario}
             borderRadius={4}
           >
-            <MaterialIcons name='arrow-back' size={24} color='rgba(0,0,0,0)' />
+            <Text bold color={"white"}>
+              Guardar
+            </Text>
           </Box>
         </Pressable>
       </Flex>

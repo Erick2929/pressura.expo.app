@@ -81,7 +81,11 @@ function MainScreen({ navigation }) {
         </HStack>
 
         <HStack w={"100%"} justifyContent='center' space={2}>
-          <MainButton title={"Doctores"} w='40%'>
+          <MainButton
+            action={() => navigation.navigate("Doctors")}
+            title={"Doctores"}
+            w='40%'
+          >
             <Ionicons name='medkit' size={24} color='white' />
           </MainButton>
           <MainButton
