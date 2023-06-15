@@ -50,6 +50,7 @@ const SessionProvider = ({ children }) => {
     } catch (error) {
       console.error("Error al actualizar el documento:", error);
     }
+    refetchUser();
   };
 
   const handleCreatePatient = async (uid, name, email) => {
@@ -71,11 +72,18 @@ const SessionProvider = ({ children }) => {
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       const user = docSnap.data();
-
+      if (user?.FechaDeNacimiento) {
+        user.FechaDeNacimiento = user.FechaDeNacimiento.toDate();
+      }
+      // console.log("Usuarioooooo: ", user);
       setUserInfo(user);
     } else {
       console.log("No such document!");
     }
+  };
+
+  const refetchUser = () => {
+    handleReadUserDB();
   };
 
   useEffect(() => {
@@ -137,6 +145,8 @@ const SessionProvider = ({ children }) => {
         userInfo,
         updateUserValues,
         createUserValues,
+        uid,
+        refetchUser,
       }}
     >
       {children}
