@@ -1,15 +1,31 @@
-import { Divider, Flex, Text } from "native-base";
+import { Divider, Flex, Pressable, Text } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import { themeColors } from "../../../../../config/theme";
+import { useSession } from "../../../../../providers/session";
 
-const DocRow = ({}) => {
+const DocRow = ({ doctorEmail, id, refetch, showToast }) => {
+  const { updateUserValues, deleteDocument } = useSession();
+
+  const handleAccept = () => {
+    updateUserValues("PacienteConDoctores", id, {
+      Relacion: 3,
+    });
+    refetch();
+    showToast();
+  };
+  const handleDecline = () => {
+    deleteDocument("PacienteConDoctores", id);
+    refetch();
+    showToast();
+  };
+
   return (
     <>
       <Flex w={"100%"} p={3} direction='row'>
         <Flex w={"50%"}>
           <Text>{"Pendiente Confirmacion"}</Text>
-          <Text mt={3}>{"ejemplodoctor@gmail.com"}</Text>
+          <Text mt={3}>{doctorEmail}</Text>
         </Flex>
         <Flex
           w={"50%"}
@@ -17,12 +33,20 @@ const DocRow = ({}) => {
           justifyContent={"space-around"}
           alignItems='center'
         >
-          <MaterialIcons name='cancel' size={24} color={themeColors.primario} />
-          <MaterialIcons
-            name='check-circle-outline'
-            size={24}
-            color={themeColors.primario}
-          />
+          <Pressable onPress={handleDecline}>
+            <MaterialIcons
+              name='cancel'
+              size={24}
+              color={themeColors.primario}
+            />
+          </Pressable>
+          <Pressable onPress={handleAccept}>
+            <MaterialIcons
+              name='check-circle-outline'
+              size={24}
+              color={themeColors.primario}
+            />
+          </Pressable>
         </Flex>
       </Flex>
       <Divider w={"100%"} />

@@ -25,7 +25,7 @@ const Profile = ({ navigation }) => {
 
   const [nombre, setNombre] = useState(userInfo?.Nombre);
   const [fechaDeNacimiento, setFechaDeNacimiento] = useState(
-    userInfo?.FechaDeNacimiento
+    userInfo?.FechaNacimiento
   );
   const [sexo, setSexo] = useState(userInfo?.Sexo);
   const [altura, setAltura] = useState(userInfo?.Altura);
@@ -33,7 +33,7 @@ const Profile = ({ navigation }) => {
   const [correoElectronico, setCorreoElectronico] = useState(
     userInfo?.CorreoElectronico
   );
-  const [date, setDate] = useState(userInfo?.FechaDeNacimiento);
+  const [date, setDate] = useState(userInfo?.FechaNacimiento);
 
   useEffect(() => {
     console.log("User: ", userInfo);
@@ -72,7 +72,7 @@ const Profile = ({ navigation }) => {
       Altura: altura,
       Peso: peso,
       CorreoElectronico: correoElectronico,
-      FechaDeNacimiento: date1,
+      FechaNacimiento: date1,
     });
     showToast();
   };

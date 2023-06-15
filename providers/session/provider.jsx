@@ -9,6 +9,7 @@ import { auth, db } from "../../config/firebase/firebase";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   setDoc,
@@ -53,13 +54,22 @@ const SessionProvider = ({ children }) => {
     refetchUser();
   };
 
+  const deleteDocument = async (collection, document) => {
+    try {
+      await deleteDoc(doc(db, collection, document));
+      console.log("Document has been deleted sucessfully!");
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  };
+
   const handleCreatePatient = async (uid, name, email) => {
     await setDoc(doc(db, "Paciente", uid), {
       Altura: 0,
       Nombre: name,
       CorreoElectronico: email,
       Direccion: "",
-      FechaDeNacimiento: "",
+      FechaNacimiento: "",
       IDPaciente: email,
       Peso: 0,
       Sexo: 0,
@@ -72,8 +82,8 @@ const SessionProvider = ({ children }) => {
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       const user = docSnap.data();
-      if (user?.FechaDeNacimiento) {
-        user.FechaDeNacimiento = user.FechaDeNacimiento.toDate();
+      if (user?.FechaNacimiento) {
+        user.FechaNacimiento = user.FechaNacimiento.toDate();
       }
       // console.log("Usuarioooooo: ", user);
       setUserInfo(user);
@@ -147,6 +157,7 @@ const SessionProvider = ({ children }) => {
         createUserValues,
         uid,
         refetchUser,
+        deleteDocument,
       }}
     >
       {children}
