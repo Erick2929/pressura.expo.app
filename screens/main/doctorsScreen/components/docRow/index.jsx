@@ -4,7 +4,7 @@ import React from "react";
 import { themeColors } from "../../../../../config/theme";
 import { useSession } from "../../../../../providers/session";
 
-const DocRow = ({ doctorEmail, id, refetch, showToast }) => {
+const DocRow = ({ doctorEmail, id, refetch, showToast, relation }) => {
   const { updateUserValues, deleteDocument } = useSession();
 
   const handleAccept = () => {
@@ -40,13 +40,15 @@ const DocRow = ({ doctorEmail, id, refetch, showToast }) => {
               color={themeColors.primario}
             />
           </Pressable>
-          <Pressable onPress={handleAccept}>
-            <MaterialIcons
-              name='check-circle-outline'
-              size={24}
-              color={themeColors.primario}
-            />
-          </Pressable>
+          {relation === 2 && (
+            <Pressable onPress={handleAccept}>
+              <MaterialIcons
+                name='check-circle-outline'
+                size={24}
+                color={themeColors.primario}
+              />
+            </Pressable>
+          )}
         </Flex>
       </Flex>
       <Divider w={"100%"} />

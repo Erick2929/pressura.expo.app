@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { themeColors } from "../../../config/theme";
 import { useSession } from "../../../providers/session";
 import { db } from "../../../config/firebase/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LogRow from "./components/LogRow";
 
 const History = ({ navigation }) => {
@@ -21,10 +21,10 @@ const History = ({ navigation }) => {
       const querySnapshot = await getDocs(q);
       const logArray = [];
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
         logArray.push(doc.data());
+        console.log("logArray: ", logArray);
       });
+      logArray.sort((a, b) => b.Fecha.toDate() - a.Fecha.toDate());
       setHistoricLogs(logArray);
     } catch (error) {
       console.log("Error: ", error);

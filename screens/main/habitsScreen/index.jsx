@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
   theme,
+  useToast,
 } from "native-base";
 import React, { useState } from "react";
 import { themeColors } from "../../../config/theme";
@@ -16,9 +17,23 @@ import { useSession } from "../../../providers/session";
 
 const Habits = ({ navigation }) => {
   const { createUserValues, userInfo } = useSession();
+  const toast = useToast();
   const [foodQ, setFoodQ] = useState(50);
   const [exerciseQ, setExerciseQ] = useState(50);
   const [medicineQ, setMedicineQ] = useState(50);
+
+  const showToast = () => {
+    toast.show({
+      placement: "top",
+      render: () => {
+        return (
+          <Box bg='emerald.500' px='2' py='1' rounded='sm' mb={5}>
+            ¡Informacion enviada!
+          </Box>
+        );
+      },
+    });
+  };
 
   const handleSendInfo = () => {
     createUserValues("Habitos", {
@@ -28,6 +43,7 @@ const Habits = ({ navigation }) => {
       Medicamentos: medicineQ,
       RegimenAlimenticio: foodQ,
     });
+    showToast();
     navigation.navigate("MainScreen");
   };
 
@@ -69,7 +85,13 @@ const Habits = ({ navigation }) => {
           </Box>
         </Pressable>
       </Flex>
-      <Box mt={10} alignItems='center' w='100%'>
+      <Flex
+        w='100%'
+        h={"85%"}
+        direction='column'
+        alignItems={"center"}
+        justifyContent='center'
+      >
         <Stack space={2} alignItems='center' w='90%' maxW='300'>
           <Text color={themeColors.primario}>
             ¿Te has estado alimentando sanamente?
@@ -138,7 +160,7 @@ const Habits = ({ navigation }) => {
             </Text>
           </Button>
         </Stack>
-      </Box>
+      </Flex>
     </Center>
   );
 };

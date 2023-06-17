@@ -1,4 +1,14 @@
-import { Box, Button, Center, Flex, Input, Pressable, Text } from "native-base";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Input,
+  // KeyboardAvoidingView,
+  Pressable,
+  Text,
+  useToast,
+} from "native-base";
 import React, { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -9,6 +19,7 @@ import { useSession } from "../../../providers/session";
 
 const ConfirmData = ({ navigation }) => {
   const route = useRoute();
+  const toast = useToast();
   const { createUserValues, userInfo } = useSession();
   const {
     comment,
@@ -37,6 +48,14 @@ const ConfirmData = ({ navigation }) => {
   const [dis3Final, setDis3Final] = useState(dis3);
 
   const handleSendInfo = () => {
+    if (
+      Number.isNaN(dis1Final) ||
+      Number.isNaN(sis1Final) ||
+      Number.isNaN(cp1Final)
+    ) {
+      alert("Ingresa almenos las primeras medidas");
+      return;
+    }
     createUserValues("Presion", {
       Comentario: comment,
       EstadoEmocional: emotionalStateFinal,
@@ -55,7 +74,20 @@ const ConfirmData = ({ navigation }) => {
       MedidaSuperior2: sis2Final !== null ? parseInt(sis2Final) : "-",
       MedidaSuperior3: sis3Final !== null ? parseInt(sis3Final) : "-",
     });
+    showToast();
     navigation.navigate("MainScreen");
+  };
+  const showToast = () => {
+    toast.show({
+      placement: "top",
+      render: () => {
+        return (
+          <Box bg='emerald.500' px='2' py='1' rounded='sm' mb={5}>
+            ¡Informacion enviada!
+          </Box>
+        );
+      },
+    });
   };
 
   const promedio = (medida1, medida2, medida3) => {
@@ -78,6 +110,10 @@ const ConfirmData = ({ navigation }) => {
         Keyboard.dismiss();
       }}
     >
+      {/* <KeyboardAvoidingView
+        h={"full"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      > */}
       <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
         <Flex w={"90%"} mt={1} alignItems='flex-start'>
           <Pressable onPress={() => navigation.goBack()}>
@@ -91,105 +127,114 @@ const ConfirmData = ({ navigation }) => {
             </Box>
           </Pressable>
         </Flex>
-        <Text bold fontSize={30} color={themeColors.primario}>
-          Confirma tus Medidas
-        </Text>
         <Flex
-          w={"90%"}
-          mt={2}
-          direction='row'
-          alignItems={"center"}
-          justifyContent={"space-between"}
-        >
-          <Text fontSize={20} color={themeColors.primario}>
-            Estado corporal:{" "}
-          </Text>
-          <Input
-            variant='outline'
-            fontSize='16px'
-            type='number'
-            keyboardType='numeric'
-            _focus={{
-              borderColor: themeColors.primario,
-              backgroundColor: themeColors.primarioTransparente,
-            }}
-            w={"50%"}
-            defaultValue={emotionalStateFinal.toString()}
-            onChange={(e) =>
-              setEmotionalStateFinal(parseInt(e.nativeEvent.text))
-            }
-          />
-        </Flex>
-        <ConfirmDataRow
-          title={"Medida 1"}
-          sis={sis1}
-          setSis={setSis1Final}
-          dis={dis1}
-          setDis={setDis1Final}
-          cp={cp1}
-          setCp={setCp1Final}
-        />
-        <ConfirmDataRow
-          title={"Medida 2"}
-          sis={sis2}
-          setSis={setSis2Final}
-          dis={dis2}
-          setDis={setDis2Final}
-          cp={cp2}
-          setCp={setCp2Final}
-        />
-        <ConfirmDataRow
-          title={"Medida 3"}
-          sis={sis3}
-          setSis={setSis3Final}
-          dis={dis3}
-          setDis={setDis3Final}
-          cp={cp3}
-          setCp={setCp3Final}
-        />
-        <Flex
-          w={"90%"}
-          mt={12}
+          w='100%'
+          h={"85%"}
           direction='column'
           alignItems={"center"}
-          justifyContent={"space-between"}
+          justifyContent='center'
         >
-          <Text fontSize={20} color={themeColors.primario}>
-            ¿Son correctas las medidas?
+          <Text bold fontSize={30} color={themeColors.primario}>
+            Confirma tus Medidas
           </Text>
           <Flex
+            w={"90%"}
             mt={2}
-            w={"100%"}
             direction='row'
+            alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <Button
-              bg={themeColors.primario}
-              marginTop={0}
-              style={{ width: "45%", height: 52 }}
-              rounded='xl'
-              onPress={handleSendInfo}
-            >
-              <Text fontSize='xl' bold color='#fff'>
-                Enviar
-              </Text>
-            </Button>
-            <Button
-              bg={themeColors.primario}
-              marginTop={0}
-              style={{ width: "45%", height: 52 }}
-              rounded='xl'
-              onPress={() => {
-                navigation.navigate("MainScreen");
+            <Text fontSize={20} color={themeColors.primario}>
+              Estado corporal:{" "}
+            </Text>
+            <Input
+              variant='outline'
+              fontSize='16px'
+              type='number'
+              keyboardType='numeric'
+              _focus={{
+                borderColor: themeColors.primario,
+                backgroundColor: themeColors.primarioTransparente,
               }}
+              w={"50%"}
+              defaultValue={emotionalStateFinal.toString()}
+              onChange={(e) =>
+                setEmotionalStateFinal(parseInt(e.nativeEvent.text))
+              }
+            />
+          </Flex>
+          <ConfirmDataRow
+            title={"Medida 1"}
+            sis={sis1}
+            setSis={setSis1Final}
+            dis={dis1}
+            setDis={setDis1Final}
+            cp={cp1}
+            setCp={setCp1Final}
+          />
+          <ConfirmDataRow
+            title={"Medida 2"}
+            sis={sis2}
+            setSis={setSis2Final}
+            dis={dis2}
+            setDis={setDis2Final}
+            cp={cp2}
+            setCp={setCp2Final}
+          />
+          <ConfirmDataRow
+            title={"Medida 3"}
+            sis={sis3}
+            setSis={setSis3Final}
+            dis={dis3}
+            setDis={setDis3Final}
+            cp={cp3}
+            setCp={setCp3Final}
+          />
+          <Flex
+            w={"90%"}
+            mt={12}
+            direction='column'
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <Text fontSize={20} color={themeColors.primario}>
+              ¿Son correctas las medidas?
+            </Text>
+            <Flex
+              mt={2}
+              w={"100%"}
+              direction='row'
+              justifyContent={"space-between"}
             >
-              <Text fontSize='xl' bold color='#fff'>
-                Reiniciar
-              </Text>
-            </Button>
+              <Button
+                bg={themeColors.primario}
+                marginTop={0}
+                style={{ width: "45%", height: 52 }}
+                rounded='xl'
+                onPress={handleSendInfo}
+              >
+                <Text fontSize='xl' bold color='#fff'>
+                  Enviar
+                </Text>
+              </Button>
+              <Button
+                bg={themeColors.primario}
+                marginTop={0}
+                style={{ width: "45%", height: 52 }}
+                rounded='xl'
+                onPress={() => {
+                  navigation.navigate("MainScreen");
+                }}
+              >
+                <Text fontSize='xl' bold color='#fff'>
+                  Reiniciar
+                </Text>
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </Center>
+      {/* </KeyboardAvoidingView> */}
     </TouchableWithoutFeedback>
   );
 };

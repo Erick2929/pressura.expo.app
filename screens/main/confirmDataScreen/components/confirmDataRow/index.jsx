@@ -26,7 +26,7 @@ const ConfirmDataRow = ({ title, sis, setSis, dis, setDis, cp, setCp }) => {
               backgroundColor: themeColors.primarioTransparente,
             }}
             w={"50%"}
-            defaultValue={sis !== null ? sis.toString() : "null"}
+            defaultValue={sis !== null ? sis.toString() : ""}
             onChange={(e) => {
               setSis(parseInt(e.nativeEvent.text));
             }}
@@ -49,7 +49,7 @@ const ConfirmDataRow = ({ title, sis, setSis, dis, setDis, cp, setCp }) => {
               backgroundColor: themeColors.primarioTransparente,
             }}
             w={"50%"}
-            defaultValue={dis !== null ? dis.toString() : "null"}
+            defaultValue={dis !== null ? dis.toString() : ""}
             onChange={(e) => {
               setDis(parseInt(e.nativeEvent.text));
             }}
@@ -74,7 +74,7 @@ const ConfirmDataRow = ({ title, sis, setSis, dis, setDis, cp, setCp }) => {
             backgroundColor: themeColors.primarioTransparente,
           }}
           w={"50%"}
-          defaultValue={cp !== null ? cp.toString() : "null"}
+          defaultValue={cp !== null ? cp.toString() : ""}
           onChange={(e) => {
             setCp(parseInt(e.nativeEvent.text));
           }}

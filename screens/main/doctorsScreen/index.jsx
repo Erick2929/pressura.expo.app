@@ -32,6 +32,9 @@ const Doctors = ({ navigation }) => {
       NombrePaciente: userInfo?.Nombre,
       Relacion: 1,
     });
+    setDoctorEmail("");
+    getRequests();
+    showToast();
   };
 
   const getRequests = async () => {
@@ -39,7 +42,9 @@ const Doctors = ({ navigation }) => {
       const q = query(
         collection(db, "PacienteConDoctores"),
         where("IDPaciente", "==", userInfo.CorreoElectronico),
-        where("Relacion", "==", 2)
+        where("Relacion", "in", [1, 2])
+        // TIENES QUYU HACER EL DOC ROW DE CONFIRJMACION PENDIENTE
+        // TEINES QUE HACE LO DEL DATE PICKER EN ANDROID ALV
       );
       const querySnapshot = await getDocs(q);
       const logArray = [];
@@ -126,6 +131,7 @@ const Doctors = ({ navigation }) => {
                 </Text>
                 <Input
                   onChange={(e) => setDoctorEmail(e.nativeEvent.text)}
+                  value={doctorEmail}
                   backgroundColor={"white"}
                   mt={5}
                   rounded='sm'
@@ -155,6 +161,7 @@ const Doctors = ({ navigation }) => {
             key={obj.id}
             doctorEmail={obj.IDDoctor}
             id={obj.id}
+            relation={obj.Relacion}
             refetch={getRequests}
             showToast={showToast}
           />

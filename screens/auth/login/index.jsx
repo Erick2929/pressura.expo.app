@@ -71,7 +71,7 @@ function Login({ navigation }) {
         Keyboard.dismiss();
       }}
     >
-      <Center safeArea flex={1} justifyContent='flex-start'>
+      <Center safeArea flex={1} justifyContent='center'>
         <Image
           style={{ height: 100, width: 125 }}
           alt='logo'
@@ -200,6 +200,7 @@ function Login({ navigation }) {
               // }}
               fontWeight='bold'
               fontSize='md'
+              mt={1}
               color={themeColors.primario}
             >
               Registrate

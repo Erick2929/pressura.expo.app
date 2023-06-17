@@ -37,66 +37,74 @@ function MainScreen({ navigation }) {
           </Box>
         </Pressable>
       </Flex>
-      <Image
-        style={{ height: 100, width: 125 }}
-        alt='logo'
-        source={Isotype}
-        marginTop={8}
-      />
+      <Flex
+        w='100%'
+        h={"85%"}
+        direction='column'
+        alignItems={"center"}
+        justifyContent='center'
+      >
+        <Image
+          style={{ height: 100, width: 125 }}
+          alt='logo'
+          source={Isotype}
+          marginTop={8}
+        />
 
-      {userInfo.Nombre ? (
-        <Text fontSize={30} mt={2} color={themeColors.primario}>
-          Buen dia {userInfo.Nombre}
-        </Text>
-      ) : (
-        <Text fontSize={30} mt={2} color={themeColors.primario}>
-          {userInfo.CorreoElectronico}
-        </Text>
-      )}
+        {userInfo.Nombre ? (
+          <Text fontSize={30} mt={2} color={themeColors.primario}>
+            Buen dia {userInfo.Nombre}
+          </Text>
+        ) : (
+          <Text fontSize={30} mt={2} color={themeColors.primario}>
+            {userInfo.CorreoElectronico}
+          </Text>
+        )}
 
-      <VStack w={"100%"} alignItems='center' space={2} mt={4}>
-        <MainButton
-          title={"Tomar presión"}
-          w='82%'
-          action={() => navigation.navigate("EmotionalState")}
-        >
-          <FontAwesome name='heart' size={24} color='white' />
-        </MainButton>
+        <VStack w={"100%"} alignItems='center' space={2} mt={4}>
+          <MainButton
+            title={"Tomar presión"}
+            w='82%'
+            action={() => navigation.navigate("EmotionalState")}
+          >
+            <FontAwesome name='heart' size={24} color='white' />
+          </MainButton>
 
-        <HStack w={"100%"} justifyContent='center' space={2}>
-          <MainButton
-            action={() => navigation.navigate("Profile")}
-            title={"Perfil"}
-            w='40%'
-          >
-            <Ionicons name='person-circle-outline' size={24} color='white' />
-          </MainButton>
-          <MainButton
-            action={() => navigation.navigate("Habits")}
-            title={"Hábitos"}
-            w='40%'
-          >
-            <FontAwesome name='apple' size={24} color='white' />
-          </MainButton>
-        </HStack>
+          <HStack w={"100%"} justifyContent='center' space={2}>
+            <MainButton
+              action={() => navigation.navigate("Profile")}
+              title={"Perfil"}
+              w='40%'
+            >
+              <Ionicons name='person-circle-outline' size={24} color='white' />
+            </MainButton>
+            <MainButton
+              action={() => navigation.navigate("Habits")}
+              title={"Hábitos"}
+              w='40%'
+            >
+              <FontAwesome name='apple' size={24} color='white' />
+            </MainButton>
+          </HStack>
 
-        <HStack w={"100%"} justifyContent='center' space={2}>
-          <MainButton
-            action={() => navigation.navigate("Doctors")}
-            title={"Doctores"}
-            w='40%'
-          >
-            <Ionicons name='medkit' size={24} color='white' />
-          </MainButton>
-          <MainButton
-            action={() => navigation.navigate("History")}
-            title={"Historial"}
-            w='40%'
-          >
-            <FontAwesome name='list-alt' size={24} color='white' />
-          </MainButton>
-        </HStack>
-      </VStack>
+          <HStack w={"100%"} justifyContent='center' space={2}>
+            <MainButton
+              action={() => navigation.navigate("Doctors")}
+              title={"Doctores"}
+              w='40%'
+            >
+              <Ionicons name='medkit' size={24} color='white' />
+            </MainButton>
+            <MainButton
+              action={() => navigation.navigate("History")}
+              title={"Historial"}
+              w='40%'
+            >
+              <FontAwesome name='list-alt' size={24} color='white' />
+            </MainButton>
+          </HStack>
+        </VStack>
+      </Flex>
     </Center>
   );
 }

@@ -161,139 +161,153 @@ const Pressure = ({ navigation }) => {
               </Box>
             </Pressable>
           </Flex>
-          <Text
-            mt={3}
-            fontSize={28}
-            color={themeColors.primario}
-            fontWeight={700}
-          >
-            Toma tu presión
-          </Text>
-          <Box
-            marginTop={8}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <FormControl>
-              <FormControl.Label>Media Sistólica</FormControl.Label>
-              <Input
-                variant='outline'
-                fontSize='16px'
-                type='number'
-                keyboardType='numeric'
-                _focus={{
-                  borderColor: themeColors.primario,
-                  backgroundColor: themeColors.primarioTransparente,
-                }}
-                w={{
-                  base: "75%",
-                  md: "25%",
-                }}
-                h={50}
-                placeholder='120'
-                onChange={handleSistolicChange}
-              />
-
-              <FormControl.Label marginTop={4}>
-                Medida Diastólica
-              </FormControl.Label>
-              <Input
-                w={{
-                  base: "75%",
-                  md: "25%",
-                }}
-                variant='outline'
-                fontSize='16px'
-                type={"number"}
-                keyboardType='numeric'
-                _focus={{
-                  borderColor: themeColors.primario,
-                  backgroundColor: themeColors.primarioTransparente,
-                }}
-                h={50}
-                placeholder='80'
-                onChange={handleDiastolicChange}
-              />
-              <FormControl.Label marginTop={4}>
-                Pulso Cardiaco
-              </FormControl.Label>
-              <Input
-                w={{
-                  base: "75%",
-                  md: "25%",
-                }}
-                variant='outline'
-                fontSize='16px'
-                type={"number"}
-                keyboardType='numeric'
-                _focus={{
-                  borderColor: themeColors.primario,
-                  backgroundColor: themeColors.primarioTransparente,
-                }}
-                h={50}
-                placeholder='72'
-                onChange={handleCardiacPulseChange}
-              />
-            </FormControl>
-          </Box>
-          <HStack
+          <Flex
+            w='100%'
+            h={"85%"}
+            direction='column'
+            alignItems={"center"}
             justifyContent='center'
-            mt={5}
-            bgColor='gray.200'
-            rounded='lg'
           >
-            <Box
-              bgColor={meassureCount === 0 && themeColors.primarioTransparente}
-              p={1}
-              rounded='lg'
+            <Text
+              mt={3}
+              fontSize={28}
+              color={themeColors.primario}
+              fontWeight={700}
             >
-              <Text bold color='gray.500'>
-                Primer medida
-              </Text>
-            </Box>
-            <Box
-              bgColor={meassureCount === 1 && themeColors.primarioTransparente}
-              p={1}
-              rounded='lg'
-            >
-              <Text bold color='gray.500'>
-                Segunda medida
-              </Text>
-            </Box>
-            <Box
-              bgColor={meassureCount === 2 && themeColors.primarioTransparente}
-              p={1}
-              rounded='lg'
-            >
-              <Text bold color='gray.500'>
-                Tercera medida
-              </Text>
-            </Box>
-          </HStack>
-          <Button
-            bg={themeColors.primario}
-            marginTop={6}
-            rounded='xl'
-            onPress={handleNextMeassure}
-          >
-            <Text bold color='#fff'>
-              Siguiente medida
+              Toma tu presión
             </Text>
-          </Button>
-          <Button
-            bg={themeColors.primario}
-            marginTop={6}
-            rounded='xl'
-            onPress={handleFinsh}
-          >
-            <Text bold color='#fff'>
-              Finalizar
-            </Text>
-          </Button>
+            <Box
+              marginTop={8}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <FormControl>
+                <FormControl.Label>Media Sistólica</FormControl.Label>
+                <Input
+                  variant='outline'
+                  fontSize='16px'
+                  type='number'
+                  keyboardType='numeric'
+                  _focus={{
+                    borderColor: themeColors.primario,
+                    backgroundColor: themeColors.primarioTransparente,
+                  }}
+                  w={{
+                    base: "75%",
+                    md: "25%",
+                  }}
+                  h={50}
+                  placeholder='120'
+                  onChange={handleSistolicChange}
+                />
+
+                <FormControl.Label marginTop={4}>
+                  Medida Diastólica
+                </FormControl.Label>
+                <Input
+                  w={{
+                    base: "75%",
+                    md: "25%",
+                  }}
+                  variant='outline'
+                  fontSize='16px'
+                  type={"number"}
+                  keyboardType='numeric'
+                  _focus={{
+                    borderColor: themeColors.primario,
+                    backgroundColor: themeColors.primarioTransparente,
+                  }}
+                  h={50}
+                  placeholder='80'
+                  onChange={handleDiastolicChange}
+                />
+                <FormControl.Label marginTop={4}>
+                  Pulso Cardiaco
+                </FormControl.Label>
+                <Input
+                  w={{
+                    base: "75%",
+                    md: "25%",
+                  }}
+                  variant='outline'
+                  fontSize='16px'
+                  type={"number"}
+                  keyboardType='numeric'
+                  _focus={{
+                    borderColor: themeColors.primario,
+                    backgroundColor: themeColors.primarioTransparente,
+                  }}
+                  h={50}
+                  placeholder='72'
+                  onChange={handleCardiacPulseChange}
+                />
+              </FormControl>
+            </Box>
+            <HStack
+              justifyContent='center'
+              mt={5}
+              bgColor='gray.200'
+              rounded='lg'
+            >
+              <Box
+                bgColor={
+                  meassureCount === 0 && themeColors.primarioTransparente
+                }
+                p={1}
+                rounded='lg'
+              >
+                <Text bold color='gray.500'>
+                  Primer medida
+                </Text>
+              </Box>
+              <Box
+                bgColor={
+                  meassureCount === 1 && themeColors.primarioTransparente
+                }
+                p={1}
+                rounded='lg'
+              >
+                <Text bold color='gray.500'>
+                  Segunda medida
+                </Text>
+              </Box>
+              <Box
+                bgColor={
+                  meassureCount === 2 && themeColors.primarioTransparente
+                }
+                p={1}
+                rounded='lg'
+              >
+                <Text bold color='gray.500'>
+                  Tercera medida
+                </Text>
+              </Box>
+            </HStack>
+            <Button
+              bg={themeColors.primario}
+              marginTop={6}
+              rounded='xl'
+              onPress={handleNextMeassure}
+            >
+              <Text bold color='#fff'>
+                Siguiente medida
+              </Text>
+            </Button>
+            <Button
+              bg={themeColors.primario}
+              marginTop={6}
+              rounded='xl'
+              onPress={handleFinsh}
+            >
+              <Text bold color='#fff'>
+                Finalizar
+              </Text>
+            </Button>
+          </Flex>
         </Center>
       ) : (
         <Timer action={setTimerView} />

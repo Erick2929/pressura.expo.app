@@ -4,6 +4,7 @@ import {
   CheckIcon,
   Flex,
   Input,
+  KeyboardAvoidingView,
   Pressable,
   Select,
   Text,
@@ -13,13 +14,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { themeColors } from "../../../config/theme";
-import DatePicker from "react-native-datepicker";
 import { useSession } from "../../../providers/session";
+import DatePicker from "../../../components/datePicker";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const Profile = ({ navigation }) => {
-  // ESTAS HACIENDO LA PANTALLA DE PERFIL, DEBERAS HACERLA TOTALMENTE FUNCIONAL Y PROBAR QUE FUNCIONE
-  // DESPUES HAZ LA DE LOS DOCTORES, NO TE TARDAS MUCHO LA VERDAD CONFIA EN TI PERO NO SEAS CONFIADO
-  // RECUAREDA NO ESTRESARTE
   const toast = useToast();
   const { userInfo, updateUserValues, uid } = useSession();
 
@@ -78,183 +77,202 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
-      <Flex
-        w={"90%"}
-        mt={1}
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems={"start"}
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <KeyboardAvoidingView
+        h={"full"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Pressable onPress={() => navigation.goBack()}>
-          <Box
-            paddingX={5}
-            paddingY={1}
-            bgColor={themeColors.primario}
-            borderRadius={4}
+        <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
+          <Flex
+            w={"90%"}
+            mt={1}
+            direction='row'
+            justifyContent={"space-between"}
+            alignItems={"flex-start"}
           >
-            <MaterialIcons name='arrow-back' size={24} color='white' />
-          </Box>
-        </Pressable>
-        <Flex direction='column' justifyContent={"center"} alignItems='center'>
-          <Ionicons name='person' size={50} color={themeColors.primario} />
+            <Pressable onPress={() => navigation.goBack()}>
+              <Box
+                paddingX={5}
+                paddingY={1}
+                bgColor={themeColors.primario}
+                borderRadius={4}
+              >
+                <MaterialIcons name='arrow-back' size={24} color='white' />
+              </Box>
+            </Pressable>
+            <Pressable onPress={handleSaveData}>
+              <Box
+                paddingX={5}
+                paddingY={1}
+                bgColor={themeColors.primario}
+                borderRadius={4}
+              >
+                <Text bold color={"white"}>
+                  Guardar
+                </Text>
+              </Box>
+            </Pressable>
+          </Flex>
+          <Flex
+            w='100%'
+            h={"85%"}
+            direction='column'
+            alignItems={"center"}
+            justifyContent='center'
+          >
+            <Flex
+              direction='column'
+              justifyContent={"center"}
+              alignItems='center'
+            >
+              <Ionicons name='person' size={50} color={themeColors.primario} />
 
-          <Text fontSize={32} color={themeColors.primario} fontWeight={700}>
-            Perfil
-          </Text>
-        </Flex>
-        <Pressable onPress={handleSaveData}>
-          <Box
-            paddingX={5}
-            paddingY={1}
-            bgColor={themeColors.primario}
-            borderRadius={4}
-          >
-            <Text bold color={"white"}>
-              Guardar
-            </Text>
-          </Box>
-        </Pressable>
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Nombre:</Text>
-        <Input
-          mx='3'
-          placeholder='Juan Perez Loya'
-          multiline
-          variant='outline'
-          fontSize='16px'
-          defaultValue={nombre}
-          _focus={{
-            borderColor: themeColors.primario,
-            backgroundColor: themeColors.primarioTransparente,
-          }}
-          w={"50%"}
-          onChange={(e) => setNombre(e.nativeEvent.text)}
-        />
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Fecha de nacimiento:</Text>
-        <DatePicker
-          confirmBtnText='Confirmar'
-          cancelBtnText='Cancelar'
-          date={date}
-          onDateChange={handleDateChange}
-          mode='date'
-        />
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Sexo:</Text>
-        <Select
-          selectedValue={sexo}
-          minWidth='200'
-          accessibilityLabel='Choose Service'
-          placeholder='Choose Service'
-          _selectedItem={{
-            bg: "teal.600",
-            endIcon: <CheckIcon size='5' />,
-          }}
-          mt={1}
-          onValueChange={(itemValue) => setSexo(itemValue)}
-        >
-          <Select.Item label='Masculino' value={0} />
-          <Select.Item label='Femenino' value={1} />
-        </Select>
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Altura:</Text>
-        <Input
-          mx='3'
-          placeholder='1.7'
-          multiline
-          variant='outline'
-          fontSize='16px'
-          defaultValue={"" + altura}
-          _focus={{
-            borderColor: themeColors.primario,
-            backgroundColor: themeColors.primarioTransparente,
-          }}
-          w={"50%"}
-          onChange={(e) => {
-            const a = parseFloat(e.nativeEvent.text);
-            setAltura(Number.isNaN(a) ? "" : a);
-          }}
-        />
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Peso:</Text>
-        <Input
-          mx='3'
-          placeholder='80'
-          defaultValue={"" + peso}
-          multiline
-          variant='outline'
-          fontSize='16px'
-          _focus={{
-            borderColor: themeColors.primario,
-            backgroundColor: themeColors.primarioTransparente,
-          }}
-          w={"50%"}
-          onChange={(e) => {
-            const p = parseFloat(e.nativeEvent.text);
-            setPeso(Number.isNaN(p) ? "" : p);
-          }}
-        />
-      </Flex>
-      <Flex
-        mt={3}
-        w='90%'
-        direction='row'
-        justifyContent={"space-between"}
-        alignItems='center'
-      >
-        <Text color={themeColors.primario}>Correo Electronico:</Text>
-        <Input
-          mx='3'
-          placeholder='ejemplo@ejemplo.com'
-          defaultValue={correoElectronico}
-          multiline
-          variant='outline'
-          fontSize='16px'
-          _focus={{
-            borderColor: themeColors.primario,
-            backgroundColor: themeColors.primarioTransparente,
-          }}
-          w={"50%"}
-          onChange={(e) => setCorreoElectronico(e.nativeEvent.text)}
-        />
-      </Flex>
-    </Center>
+              <Text fontSize={32} color={themeColors.primario} fontWeight={700}>
+                Perfil
+              </Text>
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Nombre:</Text>
+              <Input
+                mx='3'
+                placeholder='Juan Perez Loya'
+                multiline
+                variant='outline'
+                fontSize='16px'
+                defaultValue={nombre}
+                _focus={{
+                  borderColor: themeColors.primario,
+                  backgroundColor: themeColors.primarioTransparente,
+                }}
+                w={"50%"}
+                onChange={(e) => setNombre(e.nativeEvent.text)}
+              />
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Fecha de nacimiento:</Text>
+              <Box w={"50%"}>
+                <DatePicker />
+              </Box>
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Sexo:</Text>
+              <Select
+                selectedValue={sexo}
+                minWidth='50%'
+                accessibilityLabel='Choose Service'
+                placeholder='Choose Service'
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size='5' />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setSexo(itemValue)}
+              >
+                <Select.Item label='Masculino' value={0} />
+                <Select.Item label='Femenino' value={1} />
+              </Select>
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Altura:</Text>
+              <Input
+                mx='3'
+                placeholder='1.7'
+                multiline
+                variant='outline'
+                fontSize='16px'
+                defaultValue={"" + altura}
+                _focus={{
+                  borderColor: themeColors.primario,
+                  backgroundColor: themeColors.primarioTransparente,
+                }}
+                w={"50%"}
+                onChange={(e) => {
+                  const a = parseFloat(e.nativeEvent.text);
+                  setAltura(Number.isNaN(a) ? "" : a);
+                }}
+              />
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Peso:</Text>
+              <Input
+                mx='3'
+                placeholder='80'
+                defaultValue={"" + peso}
+                multiline
+                variant='outline'
+                fontSize='16px'
+                _focus={{
+                  borderColor: themeColors.primario,
+                  backgroundColor: themeColors.primarioTransparente,
+                }}
+                w={"50%"}
+                onChange={(e) => {
+                  const p = parseFloat(e.nativeEvent.text);
+                  setPeso(Number.isNaN(p) ? "" : p);
+                }}
+              />
+            </Flex>
+            <Flex
+              mt={3}
+              w='90%'
+              direction='row'
+              justifyContent={"space-between"}
+              alignItems='center'
+            >
+              <Text color={themeColors.primario}>Correo Electronico:</Text>
+              <Input
+                mx='3'
+                placeholder='ejemplo@ejemplo.com'
+                defaultValue={correoElectronico}
+                multiline
+                variant='outline'
+                fontSize='16px'
+                _focus={{
+                  borderColor: themeColors.primario,
+                  backgroundColor: themeColors.primarioTransparente,
+                }}
+                w={"50%"}
+                onChange={(e) => setCorreoElectronico(e.nativeEvent.text)}
+              />
+            </Flex>
+          </Flex>
+        </Center>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
