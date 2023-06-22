@@ -35,7 +35,7 @@ const Signin = ({ navigation }) => {
 
   const handleRegister = () => {
     if (password === confirmPassword) {
-      register(email, password);
+      register(email, password, firstName);
       console.log("Registro");
     } else {
       setNotSamePassword(true);

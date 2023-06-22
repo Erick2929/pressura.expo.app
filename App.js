@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Navigators from "./navigators";
 import { SessionProvider } from "./providers/session";
 import { UserProvider } from "./providers/user";
@@ -17,12 +17,3 @@ export default function App() {
     </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

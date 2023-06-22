@@ -2,7 +2,7 @@ import { Flex, Pressable, Text } from "native-base";
 import React from "react";
 import { themeColors } from "../../config/theme";
 
-const MainButton = ({ children, title, w, action }) => {
+const MainButton = ({ children, title, w, action, h }) => {
   return (
     <Pressable
       w={w || "100%"}
@@ -13,6 +13,7 @@ const MainButton = ({ children, title, w, action }) => {
     >
       <Flex
         w={"100%"}
+        h={h || "auto"}
         flexDirection='column'
         alignItems={"center"}
         justifyContent={"center"}

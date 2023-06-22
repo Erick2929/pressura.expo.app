@@ -71,7 +71,7 @@ function Login({ navigation }) {
         Keyboard.dismiss();
       }}
     >
-      <Center safeArea flex={1} justifyContent='flex-start'>
+      <Center safeArea flex={1} justifyContent='center'>
         <Image
           style={{ height: 100, width: 125 }}
           alt='logo'
@@ -178,10 +178,10 @@ function Login({ navigation }) {
             </Alert>
           )}
         </Box>
-
+        <Box h={"15%"}></Box>
         <Button
           bg={themeColors.primario}
-          marginTop='auto'
+          marginTop={0}
           style={{ width: "90%", height: 52 }}
           rounded='xl'
           onPress={handleLogin}
@@ -191,14 +191,27 @@ function Login({ navigation }) {
           </Text>
         </Button>
 
-        <Text fontSize='md' marginTop='3.0' marginBottom='8.0'>
+        <Text fontSize='md' marginTop='3.0' marginBottom='1.0'>
           ¿No tienes cuenta?{" "}
           <Link onPress={() => navigation.navigate("Signin")}>
-            <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
+            <Text
+              // style={{
+              //   backgroundColor: "blue",
+              // }}
+              fontWeight='bold'
+              fontSize='md'
+              mt={1}
+              color={themeColors.primario}
+            >
               Registrate
             </Text>
           </Link>
         </Text>
+        <Link onPress={() => navigation.navigate("Recover")} marginBottom='8.0'>
+          <Text fontWeight='bold' fontSize='md' color={themeColors.primario}>
+            Olvide mi contraseña
+          </Text>
+        </Link>
       </Center>
     </TouchableWithoutFeedback>
   );
