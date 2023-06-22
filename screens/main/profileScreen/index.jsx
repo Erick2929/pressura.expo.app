@@ -1,14 +1,17 @@
 import {
+  Alert,
   Box,
   Center,
   CheckIcon,
   Flex,
+  HStack,
   Input,
   KeyboardAvoidingView,
   Pressable,
   Select,
   Text,
   useToast,
+  VStack,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
@@ -33,6 +36,7 @@ const Profile = ({ navigation }) => {
     userInfo?.CorreoElectronico
   );
   const [date, setDate] = useState(userInfo?.FechaNacimiento);
+  const [isWrongDate, setIsWrongDate] = useState(false);
 
   useEffect(() => {
     console.log("User: ", userInfo);
@@ -61,7 +65,12 @@ const Profile = ({ navigation }) => {
     });
   };
 
+  // const validateSave = () =>{
+
+  // }
+
   const handleSaveData = () => {
+    if (isWrongDate) return;
     const date1 = new Date(date);
     date1.setDate(date1.getDate() + 1);
     console.log();
@@ -108,7 +117,7 @@ const Profile = ({ navigation }) => {
               <Box
                 paddingX={5}
                 paddingY={1}
-                bgColor={themeColors.primario}
+                bgColor={isWrongDate ? "gray.400" : themeColors.primario}
                 borderRadius={4}
               >
                 <Text bold color={"white"}>
@@ -167,9 +176,31 @@ const Profile = ({ navigation }) => {
             >
               <Text color={themeColors.primario}>Fecha de nacimiento:</Text>
               <Box w={"50%"}>
-                <DatePicker />
+                <DatePicker
+                  date={date}
+                  setDate={setDate}
+                  setIsWrongDate={setIsWrongDate}
+                />
               </Box>
             </Flex>
+            {isWrongDate && (
+              <Alert status={"error"} marginTop={4}>
+                <VStack space={1} flexShrink={1} w='100%'>
+                  <HStack
+                    flexShrink={1}
+                    space={1}
+                    justifyContent='space-between'
+                  >
+                    <HStack space={2} flexShrink={1}>
+                      <Alert.Icon mt='1' />
+                      <Text fontSize='md' color='coolGray.800'>
+                        {"Fecha invalida"}
+                      </Text>
+                    </HStack>
+                  </HStack>
+                </VStack>
+              </Alert>
+            )}
             <Flex
               mt={3}
               w='90%'
