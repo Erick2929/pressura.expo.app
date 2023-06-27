@@ -13,6 +13,7 @@ const DatePicker = ({ date, setDate, setIsWrongDate }) => {
   const validateDate = () => {
     if (isValidDate(dayState, monthState, yearState)) {
       setIsWrongDate(false);
+      setDate(new Date(yearState, monthState - 1, dayState - 1));
     } else {
       setIsWrongDate(true);
     }
@@ -32,11 +33,18 @@ const DatePicker = ({ date, setDate, setIsWrongDate }) => {
 
   useEffect(() => {
     validateDate();
+    // console.log("Dia: ", dayState);
+    // console.log("Month: ", monthState);
+    // console.log("Year: ", yearState);
+    // console.log(
+    //   "Fecha creada: ",
+    //   new Date(yearState, monthState - 1, dayState - 1)
+    // );
   }, [dayState, monthState, yearState]);
 
   useEffect(() => {
-    console.log("Date Effect");
-  }, [dayState, monthState, fullDateState]);
+    console.log("Date: ", date);
+  }, [date]);
 
   return (
     <Flex

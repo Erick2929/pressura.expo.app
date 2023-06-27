@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -17,7 +18,7 @@ import {
   VStack,
 } from "native-base";
 import React, { useState } from "react";
-import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import Isotype from "../../../assets/logos/pressura-logo.png";
 import { themeColors } from "../../../config/theme";
 import { FontAwesome } from "@expo/vector-icons";
@@ -36,11 +37,12 @@ const Signin = ({ navigation }) => {
   const handleRegister = () => {
     if (password === confirmPassword) {
       register(email, password, firstName);
-      console.log("Registro");
+      navigation.navigate("Login");
     } else {
       setNotSamePassword(true);
     }
   };
+
   const handleEmailChange = (e) => {
     const email = e.nativeEvent.text;
     setEmail(email);

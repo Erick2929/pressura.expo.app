@@ -25,7 +25,7 @@ function MainScreen({ navigation }) {
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
-      <Flex w={"90%"} mt={1} alignItems='flex-end'>
+      <Flex w={"90%"} mt={1} justifyContent='space-between' direction='row'>
         <Pressable onPress={logout}>
           <Box
             paddingX={3}
@@ -34,6 +34,16 @@ function MainScreen({ navigation }) {
             borderRadius={4}
           >
             <MaterialIcons name='logout' size={24} color='white' />
+          </Box>
+        </Pressable>
+        <Pressable onPress={() => alert("mensaje de creditos")}>
+          <Box
+            paddingX={3}
+            paddingY={1}
+            bgColor={themeColors.primario}
+            borderRadius={4}
+          >
+            <MaterialIcons name='info-outline' size={24} color='white' />
           </Box>
         </Pressable>
       </Flex>

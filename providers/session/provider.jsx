@@ -69,7 +69,7 @@ const SessionProvider = ({ children }) => {
       Nombre: name,
       CorreoElectronico: email,
       Direccion: "",
-      FechaNacimiento: "",
+      FechaNacimiento: new Date(),
       IDPaciente: email,
       Peso: 0,
       Sexo: 0,
@@ -77,18 +77,22 @@ const SessionProvider = ({ children }) => {
   };
 
   const handleReadUserDB = async () => {
-    const docRef = doc(db, "Paciente", uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      const user = docSnap.data();
-      if (user?.FechaNacimiento) {
-        user.FechaNacimiento = user.FechaNacimiento.toDate();
+    try {
+      const docRef = doc(db, "Paciente", uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        const user = docSnap.data();
+        if (user?.FechaNacimiento) {
+          user.FechaNacimiento = user.FechaNacimiento.toDate();
+        }
+        // console.log("Usuarioooooo: ", user);
+        setUserInfo(user);
+      } else {
+        console.log("No such document!");
       }
-      // console.log("Usuarioooooo: ", user);
-      setUserInfo(user);
-    } else {
-      console.log("No such document!");
+    } catch (err) {
+      console.log("error: ", err);
     }
   };
 
@@ -107,14 +111,15 @@ const SessionProvider = ({ children }) => {
       .then((userCredential) => {
         const user = userCredential.user;
         handleCreatePatient(user.uid, name, email);
-        setUid(user.uid);
+        logout();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log("Error Register: ", errorMessage);
+        alert(errorMessage);
         // ..
       });
-    setIsLogged(true);
   };
 
   // const handleLogin = async () => {
@@ -135,11 +140,12 @@ const SessionProvider = ({ children }) => {
   const logout = (email, password) => {
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
         setIsLogged(false);
+        setUserInfo({});
+        setUid("");
       })
       .catch((error) => {
-        // An error happened.
+        console.log("Error at logout: ", error);
       });
     // setIsLogged(false);
   };

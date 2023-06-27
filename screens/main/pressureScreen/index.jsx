@@ -119,7 +119,18 @@ const Pressure = ({ navigation }) => {
     }
   };
 
+  const validateMeassures = () => {
+    return (
+      isNaN(parseInt(sistolicMessure1)) ||
+      isNaN(parseInt(diastolicMessure1)) ||
+      isNaN(parseInt(cardiacPulse1))
+    );
+  };
   const handleFinsh = () => {
+    if (validateMeassures()) {
+      alert("las medidas son invalidas");
+      return;
+    }
     if (
       meassureCount === 0 &&
       (sistolicMessure1 === 0 || diastolicMessure1 === 0 || cardiacPulse1 === 0)
@@ -127,6 +138,7 @@ const Pressure = ({ navigation }) => {
       alert("Favor de ingresar todas las medidas");
       return;
     }
+
     navigation.navigate("ConfirmData", {
       comment: comment,
       emotionalState: emotionalState,
