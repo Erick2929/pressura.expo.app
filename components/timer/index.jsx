@@ -1,6 +1,5 @@
 import { Button, Center, Text } from "native-base";
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import { themeColors } from "../../config/theme";
 

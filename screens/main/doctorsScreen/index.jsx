@@ -15,7 +15,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import DocRow from "./components/docRow";
 import { useSession } from "./../../../providers/session";
 import { validarCorreo } from "../../../utils/formatters/emailValid";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../config/firebase/firebase";
 
 const Doctors = ({ navigation }) => {
@@ -25,7 +25,24 @@ const Doctors = ({ navigation }) => {
   const [requestLogs, setRequestLogs] = useState([]);
   const [doctorEmail, setDoctorEmail] = useState("");
 
-  const handleCreateDoctorRquest = () => {
+  // hacer lo de la validacion de que si ya hay un arelacion con el doc, ya no mandes nada
+
+  const getRelationValidation = async () => {
+    try {
+      const q = query(
+        collection(db, "PacienteConDoctores"),
+        where("IDPaciente", "==", userInfo.CorreoElectronico),
+        where("IDDoctor", "==", doctorEmail)
+      );
+      const querySnapshot = await getDocs(q);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
+
+  const handleCreateDoctorRquest = async () => {
+    // relation validation
+
     createUserValues("PacienteConDoctores", {
       IDDoctor: doctorEmail,
       IDPaciente: userInfo?.CorreoElectronico,
@@ -41,10 +58,7 @@ const Doctors = ({ navigation }) => {
     try {
       const q = query(
         collection(db, "PacienteConDoctores"),
-        where("IDPaciente", "==", userInfo.CorreoElectronico),
-        where("Relacion", "in", [1, 2])
-        // TIENES QUYU HACER EL DOC ROW DE CONFIRJMACION PENDIENTE
-        // TEINES QUE HACE LO DEL DATE PICKER EN ANDROID ALV
+        where("IDPaciente", "==", userInfo.CorreoElectronico)
       );
       const querySnapshot = await getDocs(q);
       const logArray = [];

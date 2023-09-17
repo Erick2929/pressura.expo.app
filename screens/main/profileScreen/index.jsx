@@ -58,7 +58,7 @@ const Profile = ({ navigation }) => {
       render: () => {
         return (
           <Box bg='emerald.500' px='2' py='1' rounded='sm' mb={5}>
-            ¡Los datos fueron guardados exitisamente!
+            ¡Los datos fueron guardados exitosamente!
           </Box>
         );
       },
@@ -83,6 +83,7 @@ const Profile = ({ navigation }) => {
       FechaNacimiento: date1,
     });
     showToast();
+    navigation.goBack();
   };
 
   return (
@@ -221,8 +222,8 @@ const Profile = ({ navigation }) => {
                 mt={1}
                 onValueChange={(itemValue) => setSexo(itemValue)}
               >
-                <Select.Item label='Masculino' value={0} />
-                <Select.Item label='Femenino' value={1} />
+                <Select.Item label='Masculino' value={1} />
+                <Select.Item label='Femenino' value={2} />
               </Select>
             </Flex>
             <Flex
@@ -239,7 +240,7 @@ const Profile = ({ navigation }) => {
                 multiline
                 variant='outline'
                 fontSize='16px'
-                defaultValue={"" + altura}
+                defaultValue={altura ? "" + altura : ""}
                 _focus={{
                   borderColor: themeColors.primario,
                   backgroundColor: themeColors.primarioTransparente,
@@ -262,7 +263,7 @@ const Profile = ({ navigation }) => {
               <Input
                 mx='3'
                 placeholder='80'
-                defaultValue={"" + peso}
+                defaultValue={peso ? "" + peso : ""}
                 multiline
                 variant='outline'
                 fontSize='16px'

@@ -5,11 +5,12 @@ import { themeColors } from "../../../../../config/theme";
 import { useSession } from "../../../../../providers/session";
 
 const DocRow = ({ doctorEmail, id, refetch, showToast, relation }) => {
-  const { updateUserValues, deleteDocument } = useSession();
+  const { updateUserValues, deleteDocument, userInfo } = useSession();
 
   const handleAccept = () => {
     updateUserValues("PacienteConDoctores", id, {
       Relacion: 3,
+      NombrePaciente: userInfo?.Nombre,
     });
     refetch();
     showToast();
