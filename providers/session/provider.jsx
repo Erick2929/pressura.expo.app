@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -169,10 +169,6 @@ const SessionProvider = ({ children }) => {
       {children}
     </sessionContext.Provider>
   );
-};
-
-SessionProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export { sessionContext };
