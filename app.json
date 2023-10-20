@@ -4,28 +4,26 @@
     "slug": "pressura-expo-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logos/pressura-logo.png",
+    "icon": "./assets/logos/pressura-logo-final.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/imgs/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logos/pressura-logo.png",
+        "foregroundImage": "./assets/logos/pressura-logo-final.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ericksillerdev.pressuraexpoapp"
     },
     "web": {
-      "favicon": "./assets/logos/pressura-logo.png"
+      "favicon": "./assets/logos/pressura-logo-final.png"
     },
     "extra": {
       "eas": {
