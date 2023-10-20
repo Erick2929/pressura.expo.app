@@ -18,10 +18,22 @@ import { themeColors } from "../../../config/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import MainButton from "../../../components/mainButton";
+import { Alert } from "react-native";
 
 function MainScreen({ navigation }) {
   const { logout } = useSession();
   const { userInfo, createUserValues } = useSession();
+
+  const creditos =
+    "Pressura ha sido desarrollado por estudiantes del Tecnológico de Monterrey durante el semestre Febrero Junio de 2023, como parte del módulo Desarrollo de Aplicaciones para Dispositivos Móviles del bloque TC2007B y asesorados por la maestra Yolanda Martínez Treviño. Desarrollador: Erick Francisco Siller Ojeda. Pressura se distribuye como está de manera gratuita y se prohíbe su distribución y uso con fines de lucro.";
+
+  const showCredtisAlert = () => {
+    Alert.alert("Créditos", creditos, [
+      {
+        text: "Ok",
+      },
+    ]);
+  };
 
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='flex-start'>
@@ -36,7 +48,7 @@ function MainScreen({ navigation }) {
             <MaterialIcons name='logout' size={24} color='white' />
           </Box>
         </Pressable>
-        <Pressable onPress={() => alert("mensaje de creditos")}>
+        <Pressable onPress={showCredtisAlert}>
           <Box
             paddingX={3}
             paddingY={1}

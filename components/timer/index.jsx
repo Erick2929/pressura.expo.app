@@ -49,7 +49,7 @@ const Timer = ({ action }) => {
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='center'>
       <Box
-        width='50%'
+        width='250px'
         display='flex'
         alignItems='center'
         justifyContent='center'
