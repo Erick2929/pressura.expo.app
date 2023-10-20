@@ -1,4 +1,3 @@
-import { Text } from "native-base";
 import React from "react";
 import { useSession } from "../providers/session";
 import AuthNavigator from "./auth";

@@ -1,11 +1,9 @@
-import { Button, Center, Text } from "native-base";
+import { Box, Button, Center, Text } from "native-base";
 import React, { useEffect, useState } from "react";
-import ProgressCircle from "react-native-progress-circle";
 import { themeColors } from "../../config/theme";
 
 const Timer = ({ action }) => {
   let time = 119;
-  //   let time = 3;
   const [timeState, setTimeState] = useState(120);
 
   const [minutes, setMinutes] = useState("2");
@@ -36,20 +34,32 @@ const Timer = ({ action }) => {
     };
   }, []);
 
+  const myRef = React.useRef({});
+  React.useEffect(() => {
+    const styleObj = {
+      borderWidth: 4,
+      borderRadius: 15,
+      borderColor: themeColors.primario,
+    };
+    myRef.current.setNativeProps({
+      style: styleObj,
+    });
+  }, [myRef]);
+
   return (
     <Center safeArea flex={1} h={"full"} justifyContent='center'>
-      <ProgressCircle
-        percent={(timeState * 100) / 120}
-        radius={100}
-        borderWidth={8}
-        color={themeColors.primario}
-        shadowColor='#cccccc'
-        bgColor='#fff'
+      <Box
+        width='50%'
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        p='8'
+        ref={myRef}
       >
         <Text bold fontSize={"6xl"}>
           {minutes + ":" + seconds}
         </Text>
-      </ProgressCircle>
+      </Box>
       <Button variant='ghost' mt={5} onPress={() => action(false)}>
         Finalizar
       </Button>

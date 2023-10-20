@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logos/pressura-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ericksillerdev.pressuraexpoapp"
     },
     "web": {
       "favicon": "./assets/logos/pressura-logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d80f5c32-5326-49cb-ac0a-8de3d1682d55"
+      }
     }
   }
 }
